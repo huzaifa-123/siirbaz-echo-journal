@@ -1,0 +1,251 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 220 10% 7%; /* almost black */
+    --foreground: 220 10% 96%; /* very light grey for text */
+
+    --card: 220 10% 12%; /* dark grey for cards */
+    --card-foreground: 220 10% 96%;
+
+    --popover: 220 10% 12%;
+    --popover-foreground: 220 10% 96%;
+
+    --primary: 220 5% 30%; /* medium grey for primary */
+    --primary-foreground: 220 10% 96%;
+
+    --secondary: 220 5% 18%;
+    --secondary-foreground: 220 10% 96%;
+
+    --muted: 220 5% 15%;
+    --muted-foreground: 220 5% 60%;
+
+    --accent: 220 5% 22%;
+    --accent-foreground: 220 10% 96%;
+
+    --destructive: 0 0% 30%;
+    --destructive-foreground: 220 10% 96%;
+
+    --border: 220 5% 18%;
+    --input: 220 5% 18%;
+    --ring: 220 5% 30%;
+    --radius: 0.75rem;
+
+    --sidebar-background: 220 10% 7%;
+    --sidebar-foreground: 220 10% 96%;
+    --sidebar-primary: 220 5% 30%;
+    --sidebar-primary-foreground: 220 10% 96%;
+    --sidebar-accent: 220 5% 22%;
+    --sidebar-accent-foreground: 220 10% 96%;
+    --sidebar-border: 220 5% 18%;
+    --sidebar-ring: 220 5% 30%;
+
+    /* Custom gradients */
+    --gradient-primary: linear-gradient(135deg, #FF832F 0%, #FF832F 100%);
+    --gradient-card: linear-gradient(135deg, rgba(255, 131, 47, 0.12) 0%, rgba(255, 131, 47, 0.10) 100%);
+    --glass-bg: rgba(30, 30, 30, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.06);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    background: radial-gradient(ellipse at top, hsl(220, 70%, 5%) 0%, hsl(220, 13%, 9%) 100%);
+    min-height: 100vh;
+  }
+
+  /* Futuristic scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(45deg, #FF832F, #FF832F);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255, 131, 47, 0.5);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    box-shadow: 0 0 15px rgba(255, 131, 47, 0.8);
+  }
+}
+
+@layer components {
+  /* Glassmorphism effect */
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+  }
+
+  /* 3D Card effect */
+  .card-3d {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2),
+      0 0 0 1px rgba(255, 255, 255, 0.05);
+    transform-style: preserve-3d;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .card-3d:hover {
+    transform: translateY(-4px) rotateX(5deg);
+    box-shadow: 
+      0 20px 40px rgba(0, 0, 0, 0.4),
+      0 0 20px rgba(255, 131, 47, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+
+  /* Futuristic button */
+  .btn-futuristic {
+    position: relative;
+    background: linear-gradient(135deg, #FF832F 0%, #FF832F 100%);
+    border: 1px solid rgba(255, 131, 47, 0.5);
+    box-shadow: 
+      0 4px 15px rgba(255, 131, 47, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+  }
+
+  .btn-futuristic::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+  }
+
+  .btn-futuristic:hover::before {
+    left: 100%;
+  }
+
+  .btn-futuristic:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+      0 8px 25px rgba(255, 131, 47, 0.5),
+      0 0 20px rgba(255, 131, 47, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+
+  /* Neon glow effect */
+  .neon-glow {
+    box-shadow: 
+      0 0 5px #FF832F,
+      0 0 10px #FF832F,
+      0 0 15px #FF832F,
+      0 0 20px #FF832F;
+    animation: neon-pulse 2s ease-in-out infinite alternate;
+  }
+
+  /* Floating animation */
+  .floating {
+    animation: floating 3s ease-in-out infinite;
+  }
+
+  /* Pulse animation for interactive elements */
+  .pulse-subtle {
+    animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+}
+
+@keyframes neon-pulse {
+  from {
+    box-shadow: 
+      0 0 5px #FF832F,
+      0 0 10px #FF832F,
+      0 0 15px #FF832F,
+      0 0 20px #FF832F;
+  }
+  to {
+    box-shadow: 
+      0 0 10px #FF832F,
+      0 0 20px #FF832F,
+      0 0 30px #FF832F,
+      0 0 40px #FF832F;
+  }
+}
+
+@keyframes floating {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+/* Accordion animations with 3D effect */
+@keyframes accordion-down {
+  from {
+    height: 0;
+    opacity: 0;
+    transform: rotateX(-10deg);
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+    transform: rotateX(0deg);
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+    transform: rotateX(0deg);
+  }
+  to {
+    height: 0;
+    opacity: 0;
+    transform: rotateX(-10deg);
+  }
+}
+
+/* Enhanced fade animations */
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes slide-in-right {
+  0% { 
+    transform: translateX(100%) rotateY(45deg);
+    opacity: 0;
+  }
+  100% { 
+    transform: translateX(0) rotateY(0deg);
+    opacity: 1;
+  }
+}
