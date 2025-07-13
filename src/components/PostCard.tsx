@@ -267,7 +267,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, onLike, showFollowButton = tr
         {post.image_url && (
           <div className="relative overflow-hidden rounded-2xl border border-neutral-800/60 mb-8 group-hover:border-neutral-700/80 transition-all duration-700">
             <img
-              src={`http://localhost:8000${post.image_url}`}
+              src={`https://dizesi-backend.onrender.com${post.image_url}`}
               alt="Post illustration"
               className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-1000"
             />

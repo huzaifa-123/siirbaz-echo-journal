@@ -164,7 +164,7 @@ const Profile: React.FC = () => {
 
   const isOwnProfile = currentUser?.username === username;
 
-  const API_BASE_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8000/api";
+  const API_BASE_URL = import.meta.env.VITE_API_URL ?? "https://dizesi-backend.onrender.com/api";
   const getImageUrl = (path?: string | null) => {
     if (!path) return undefined;
     const base = API_BASE_URL.replace(/\/api$/, "");
