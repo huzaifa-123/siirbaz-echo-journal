@@ -311,7 +311,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, onLike, showFollowButton = tr
             ) : commentsError ? (
               <div className="text-red-400">{commentsError}</div>
             ) : comments.length === 0 ? (
-              <div className="text-neutral-400">No comments yet.</div>
+              <div className="text-neutral-400">Henüz yorum yok.</div>
             ) : (
               <div className="space-y-4">
                 {comments.map(comment => (

@@ -307,7 +307,7 @@ const Profile: React.FC = () => {
       </Card>
       {/* User Posts */}
       <div className="mt-10">
-        <h2 className="text-2xl font-bold text-white mb-6">Posts</h2>
+        <h2 className="text-2xl font-bold text-white mb-6">gönderiler</h2>
         <div className="space-y-6">
           {posts.length === 0 ? (
             <div className="text-center py-12">
