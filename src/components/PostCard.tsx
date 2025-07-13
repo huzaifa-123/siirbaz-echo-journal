@@ -8,6 +8,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useState } from 'react';
 import { Dialog as UIDialog } from '@/components/ui/dialog';
 import CommentDialog from './CommentDialog';
+import { Link } from 'react-router-dom';
 
 interface PostCardProps {
   post: {
@@ -63,10 +64,6 @@ const PostCard: React.FC<PostCardProps> = ({ post, onLike, showFollowButton = tr
 
   // Defensive user fallback
   const user = post.user || { fullName: 'Bilinmeyen Kullanıcı', username: 'bilinmeyen', profilePicture: '', isFollowing: false };
-  const initials = user.fullName
-    ? user.fullName.split(' ').map(n => n[0]).join('')
-    : 'B';
-
   // Remove: onFollow, showFollowButton props, isFollowLoading, showUnfollowDialog, handleFollow, handleUnfollow, and all follow button JSX.
   // Remove all references to post.user.isFollowing and follow button rendering.
 
@@ -180,7 +177,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, onLike, showFollowButton = tr
               <Avatar className="h-16 w-16 ring-2 ring-neutral-700/30 group-hover:ring-neutral-500/40 transition-all duration-500">
                 <AvatarImage src={user.profilePicture} alt={user.fullName} />
                 <AvatarFallback className="bg-neutral-800 text-white font-bold">
-                  {initials}
+                <img src="/default.png" alt="Varsayılan profil" className="w-full h-full object-cover rounded-full" />
                 </AvatarFallback>
               </Avatar>
               <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-neutral-700 rounded-full border-2 border-neutral-900"></div>
@@ -191,9 +188,10 @@ const PostCard: React.FC<PostCardProps> = ({ post, onLike, showFollowButton = tr
                 {user.fullName}
               </h3>
               <p className="text-neutral-400 text-sm">
-                @{user.username} • {formatDate(post.created_at)}
+                <Link to={`/profile/${user.username}`} className="hover:underline">
+                  @{user.username}
+                </Link> • {formatDate(post.created_at)}
               </p>
-              <p className="text-neutral-500 text-xs font-medium mt-1">Literary Contributor</p>
             </div>
           </div>
           
@@ -208,11 +206,11 @@ const PostCard: React.FC<PostCardProps> = ({ post, onLike, showFollowButton = tr
               >
                 {isFollowing ? (
                     <>
-                      <Check className="h-4 w-4 mr-2" /> Following
+                      <Check className="h-4 w-4 mr-2" /> takip edilen
                     </>
                   ) : (
                     <>
-                      <UserPlus className="h-4 w-4 mr-2" /> Follow
+                      <UserPlus className="h-4 w-4 mr-2" /> Takip Et
                     </>
                   )}
                 </Button>
@@ -285,7 +283,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, onLike, showFollowButton = tr
               onClick={() => onLike(post.id)}
               activeColor="text-red-400"
               hoverColor="hover:text-red-400"
-              label="Appreciate"
+              label="beğen"
             />
             
             <ActionButton
@@ -293,20 +291,21 @@ const PostCard: React.FC<PostCardProps> = ({ post, onLike, showFollowButton = tr
               count={commentsCount}
               onClick={handleComment}
               hoverColor="hover:text-neutral-300"
-              label="Discuss"
+              label="yorum yap"
             />
             
             <ActionButton
               icon={Share2}
               onClick={handleShare}
               hoverColor="hover:text-neutral-300"
-              label="Share"
+              label="paylaş"
             />
           </div>
         </div>
         {showComments && (
           <CommentDialog open={showComments} onClose={() => setShowComments(false)}>
-            <h2 className="text-lg font-bold text-neutral-100 mb-4">Comments</h2>
+            <h2 className="text-lg font-bold text-neutral-100 mb-4">
+            yorumlar</h2>
             {commentsLoading ? (
               <div className="text-neutral-400">Loading...</div>
             ) : commentsError ? (
@@ -317,7 +316,11 @@ const PostCard: React.FC<PostCardProps> = ({ post, onLike, showFollowButton = tr
               <div className="space-y-4">
                 {comments.map(comment => (
                   <div key={comment.id} className="border-b border-neutral-800 pb-2">
-                    <div className="font-semibold text-neutral-200">{comment.user?.full_name || 'Unknown User'}</div>
+                    <div className="font-semibold text-neutral-200">
+                      <Link to={`/profile/${comment.user?.username}`} className="hover:underline">
+                        {comment.user?.full_name || 'Unknown User'}
+                      </Link>
+                    </div>
                     <div className="text-neutral-400 text-sm">{comment.content}</div>
                     <div className="text-neutral-600 text-xs mt-1">{new Date(comment.created_at).toLocaleString()}</div>
                   </div>

@@ -64,7 +64,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <Link to="/" className="flex items-center space-x-4 group">
               <div className="relative">
                 <img src="/dizesi.jpg" alt="Dizesi Logo" className="h-12 w-12 rounded-2xl border border-neutral-700/40 group-hover:border-neutral-400/50 transition-all duration-500 bg-neutral-800/60 object-cover" />
-                <div className="absolute -top-1 -right-1 w-3 h-3 bg-neutral-700 rounded-full animate-pulse"></div>
               </div>
               <div>
                 <h1 className="text-3xl font-bold text-neutral-100 group-hover:text-neutral-300 transition-colors duration-500 tracking-tight">

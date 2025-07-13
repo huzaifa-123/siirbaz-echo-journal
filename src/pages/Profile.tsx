@@ -217,7 +217,11 @@ const Profile: React.FC = () => {
                     className="object-cover w-full h-full"
                   />
                 ) : (
-                  <span className="text-4xl text-gray-400">{profile?.full_name?.charAt(0) || '?'}</span>
+                  <img
+                    src="/default.png"
+                    alt="Varsayılan profil"
+                    className="w-full h-full object-cover"
+                  />
                 )}
               </div>
               {isOwnProfile && (
@@ -307,7 +311,7 @@ const Profile: React.FC = () => {
         <div className="space-y-6">
           {posts.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-gray-400 text-lg">No posts yet</p>
+              <p className="text-gray-400 text-lg">Henüz bir gönderi yok</p>
             </div>
           ) : (
             posts.map(post => (

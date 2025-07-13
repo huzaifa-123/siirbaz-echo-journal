@@ -83,7 +83,7 @@ const Notifications: React.FC = () => {
                   <Avatar className="h-10 w-10">
                     <AvatarImage src={notification.actor?.profilePicture} />
                     <AvatarFallback className="bg-gray-600 text-white">
-                      {notification.actor?.full_name?.charAt(0) || 'N'}
+                    <img src="/default.png" alt="Varsayılan profil" className="w-full h-full object-cover rounded-full" />
                     </AvatarFallback>
                   </Avatar>
                   
