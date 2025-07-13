@@ -152,7 +152,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                         <Link to="/following" className="py-2" onClick={() => document.activeElement && (document.activeElement as HTMLElement).blur()}>
                           Takip Edilenler
                         </Link>
-                        <Link to="/notifications" className="py-2" onClick={() => document.activeElement && (document.activeElement as HTMLElement).blur()}>
+                        <Link to="/notifications" className="py-2" onClick={() => {
+                          if (document.activeElement) {
+                            (document.activeElement as HTMLElement).blur();
+                          }
+                          setUnreadCount(0);
+                        }}>
                           Bildirimler
                           {unreadCount > 0 && (
                             <span className="ml-2 inline-block bg-[#FF832F] text-xs rounded-full px-2 py-0.5 text-white font-bold">

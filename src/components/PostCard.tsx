@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Heart, MessageCircle, Share2, MoreHorizontal, Quote, UserPlus, Check, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useAuth } from '../contexts/AuthContext';
 import { apiService } from '../services/api';
 import { useToast } from '@/hooks/use-toast';
-import { useState } from 'react';
 import { Dialog as UIDialog } from '@/components/ui/dialog';
 import CommentDialog from './CommentDialog';
 import { Link } from 'react-router-dom';
@@ -51,6 +50,19 @@ const PostCard: React.FC<PostCardProps> = ({ post, onLike, showFollowButton = tr
   const [reportReason, setReportReason] = useState('');
   const [isReporting, setIsReporting] = useState(false);
   const [hasReported, setHasReported] = useState(false);
+  const [profileData, setProfileData] = useState<any>(null);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const data = await apiService.getProfile(post.user.username);
+        setProfileData(data.user);
+      } catch (error) {
+        setProfileData(null);
+      }
+    };
+    fetchProfile();
+  }, [post.user.username]);
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -61,6 +73,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, onLike, showFollowButton = tr
       minute: '2-digit'
     });
   };
+  
 
   // Defensive user fallback
   const user = post.user || { fullName: 'Bilinmeyen Kullanıcı', username: 'bilinmeyen', profilePicture: '', isFollowing: false };
@@ -174,12 +187,20 @@ const PostCard: React.FC<PostCardProps> = ({ post, onLike, showFollowButton = tr
         <div className="flex items-start justify-between mb-6">
           <div className="flex items-center space-x-5">
             <div className="relative">
-              <Avatar className="h-16 w-16 ring-2 ring-neutral-700/30 group-hover:ring-neutral-500/40 transition-all duration-500">
-                <AvatarImage src={user.profilePicture} alt={user.fullName} />
-                <AvatarFallback className="bg-neutral-800 text-white font-bold">
-                <img src="/default.png" alt="Varsayılan profil" className="w-full h-full object-cover rounded-full" />
-                </AvatarFallback>
-              </Avatar>
+              <div className="h-16 w-16 rounded-full ring-2 ring-neutral-700/30 group-hover:ring-neutral-500/40 transition-all duration-500 overflow-hidden bg-neutral-800 flex items-center justify-center">
+                <img
+                  src={
+                    profileData?.profile_picture
+                      ? (profileData.profile_picture.startsWith('http')
+                          ? profileData.profile_picture
+                          : `https://dizesi-backend.onrender.com${profileData.profile_picture}`)
+                      : '/default.png'
+                  }
+                  alt={post.user.fullName}
+                  className="object-cover w-full h-full rounded-full"
+                  onError={(e: React.SyntheticEvent<HTMLImageElement>) => { e.currentTarget.src = '/default.png'; }}
+                />
+              </div>
               {user.username === "elifdogan" && (
                 <span className="absolute -bottom-1 -right-1 w-5 h-5 bg-white rounded-full flex items-center justify-center border-2 border-neutral-900">
                   <svg className="w-4 h-4 text-orange-400" fill="currentColor" viewBox="0 0 20 20">
@@ -191,11 +212,11 @@ const PostCard: React.FC<PostCardProps> = ({ post, onLike, showFollowButton = tr
             
             <div>
               <h3 className="font-bold text-neutral-100 text-lg group-hover:text-neutral-300 transition-colors duration-500">
-                {user.fullName}
+                {post.user.fullName}
               </h3>
               <p className="text-neutral-400 text-sm">
-                <Link to={`/profile/${user.username}`} className="hover:underline">
-                  @{user.username}
+                <Link to={`/profile/${post.user.username}`} className="hover:underline">
+                  @{post.user.username}
                 </Link> • {formatDate(post.created_at)}
               </p>
             </div>
