@@ -37,8 +37,8 @@ const Home: React.FC = () => {
       setPosts(data.posts || []);
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to load articles.",
+        title: "Hata",
+        description: "Makaleler yüklenemedi.",
         variant: "destructive",
       });
     } finally {
@@ -60,8 +60,8 @@ const Home: React.FC = () => {
       ));
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to like article.",
+        title: "Hata",
+        description: "Makale beğenilemedi.",
         variant: "destructive",
       });
     }
@@ -81,7 +81,7 @@ const Home: React.FC = () => {
         : post
       ));
     } catch (error) {
-      toast({ title: "Error", description: "Failed to follow user.", variant: "destructive" });
+      toast({ title: "Hata", description: "Kullanıcı takip edilemedi.", variant: "destructive" });
     }
     setIsProcessing(false);
   };
@@ -102,8 +102,8 @@ const Home: React.FC = () => {
       <div className="space-y-8">
         {posts.length === 0 ? (
           <div className="text-center py-20">
-            <h3 className="text-2xl font-bold text-white mb-4">No Posts Yet</h3>
-            <p className="text-gray-400 text-lg">Be the first to share something amazing with the community!</p>
+            <h3 className="text-2xl font-bold text-white mb-4">Henüz Makale Yok</h3>
+            <p className="text-gray-400 text-lg">Siz ilk olarak harika bir paylaşım yapın!</p>
           </div>
         ) : (
           posts.map((post, index) => (

@@ -93,13 +93,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <div className="flex items-center space-x-3">
               {user ? (
                 <>
-                  <NavButton to="/" icon={Home} tooltip="Home" />
-                  <NavButton to="/create" icon={Feather} tooltip="Write Article" />
-                  <NavButton to="/following" icon={Users} tooltip="Following" />
-                  <NavButton to="/notifications" icon={Bell} tooltip="Notifications" badge={unreadCount > 0 ? String(unreadCount) : undefined} />
-                  <NavButton to={`/profile/${user.username}`} icon={User} tooltip="Profile" />
+                  <NavButton to="/" icon={Home} tooltip="Ana Sayfa" />
+                  <NavButton to="/create" icon={Feather} tooltip="Yazı Yaz" />
+                  <NavButton to="/following" icon={Users} tooltip="Takip Edilenler" />
+                  <NavButton to="/notifications" icon={Bell} tooltip="Bildirimler" badge={unreadCount > 0 ? String(unreadCount) : undefined} />
+                  <NavButton to={`/profile/${user.username}`} icon={User} tooltip="Profil" />
                   {user.role === 'admin' && (
-                    <NavButton to="/admin" icon={Settings} tooltip="Admin Panel" />
+                    <NavButton to="/admin" icon={Settings} tooltip="Yönetici Paneli" />
                   )}
                   <Button 
                     variant="ghost" 
@@ -114,12 +114,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 <div className="flex items-center space-x-4">
                   <Link to="/login">
                     <Button variant="outline" size="sm" className="border-neutral-600 hover:border-neutral-400/50 hover:bg-neutral-700/10 transition-all duration-300 rounded-xl">
-                      Sign In
+                      Giriş Yap
                     </Button>
                   </Link>
                   <Link to="/register">
                     <Button size="sm" className="bg-neutral-800 hover:bg-neutral-700 text-white font-medium shadow-lg shadow-neutral-900/25 rounded-xl">
-                      Join Community
+                      Topluluğa Katıl
                     </Button>
                   </Link>
                 </div>
@@ -145,29 +145,29 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 </div>
                 <div>
                   <h3 className="text-2xl font-bold text-neutral-100">Dizesi</h3>
-                  <p className="text-neutral-400">Literary Excellence</p>
+                  <p className="text-neutral-400">Edebi Mükemmellik</p>
                 </div>
               </div>
               <p className="text-neutral-400 leading-relaxed max-w-md">
-                A sophisticated platform for writers, poets, and literary enthusiasts to share their craft and connect with fellow wordsmiths.
+                Yazarlar, şairler ve edebiyat tutkunlarının eserlerini paylaşabileceği ve diğer kelime ustalarıyla bağlantı kurabileceği sofistike bir platform.
               </p>
             </div>
             
             <div>
-              <h4 className="text-neutral-200 font-semibold mb-4">Community</h4>
+              <h4 className="text-neutral-200 font-semibold mb-4">Topluluk</h4>
               <ul className="space-y-2">
-                <li><Link to="/about" className="text-neutral-400 hover:text-neutral-200 transition-colors">About Us</Link></li>
-                <li><Link to="/guidelines" className="text-neutral-400 hover:text-neutral-200 transition-colors">Writing Guidelines</Link></li>
-                <li><Link to="/support" className="text-neutral-400 hover:text-neutral-200 transition-colors">Support</Link></li>
+                <li><Link to="/about" className="text-neutral-400 hover:text-neutral-200 transition-colors">Hakkımızda</Link></li>
+                <li><Link to="/guidelines" className="text-neutral-400 hover:text-neutral-200 transition-colors">Yazım Kuralları</Link></li>
+                <li><Link to="/support" className="text-neutral-400 hover:text-neutral-200 transition-colors">Destek</Link></li>
               </ul>
             </div>
             
             <div>
-              <h4 className="text-neutral-200 font-semibold mb-4">Resources</h4>
+              <h4 className="text-neutral-200 font-semibold mb-4">Kaynaklar</h4>
               <ul className="space-y-2">
-                <li><Link to="/help" className="text-neutral-400 hover:text-neutral-200 transition-colors">Help Center</Link></li>
-                <li><Link to="/privacy" className="text-neutral-400 hover:text-neutral-200 transition-colors">Privacy Policy</Link></li>
-                <li><Link to="/terms" className="text-neutral-400 hover:text-neutral-200 transition-colors">Terms of Service</Link></li>
+                <li><Link to="/help" className="text-neutral-400 hover:text-neutral-200 transition-colors">Yardım Merkezi</Link></li>
+                <li><Link to="/privacy" className="text-neutral-400 hover:text-neutral-200 transition-colors">Gizlilik Politikası</Link></li>
+                <li><Link to="/terms" className="text-neutral-400 hover:text-neutral-200 transition-colors">Kullanım Koşulları</Link></li>
               </ul>
             </div>
           </div>

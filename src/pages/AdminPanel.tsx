@@ -86,8 +86,8 @@ const AdminPanel: React.FC = () => {
   useEffect(() => {
     if (!user?.isAdmin) {
       toast({
-        title: 'Unauthorized',
-        description: 'You do not have permission to access this page.',
+        title: 'Yetkisiz',
+        description: 'Bu sayfaya erişim izniniz yok.',
         variant: 'destructive',
       });
       return;
@@ -104,8 +104,8 @@ const AdminPanel: React.FC = () => {
       setPosts(postsData.posts);
     } catch (error) {
       toast({
-        title: 'Error',
-        description: 'Failed to fetch data.',
+        title: 'Hata',
+        description: 'Veriler alınamadı.',
         variant: 'destructive',
       });
     } finally {
@@ -120,7 +120,7 @@ const AdminPanel: React.FC = () => {
       const data = await apiService.getReports();
       setReports(data.reports || []);
     } catch (err) {
-      setReportsError('Failed to fetch reports.');
+      setReportsError('Raporlar alınamadı.');
     }
     setReportsLoading(false);
   };
@@ -140,20 +140,20 @@ const AdminPanel: React.FC = () => {
   const handleApprove = async (postId: number) => {
     try {
       await apiService.approvePost(postId);
-      toast({ title: 'Post approved' });
+      toast({ title: 'Gönderi onaylandı' });
       setPosts(posts.filter((post) => post.id !== postId));
     } catch (err) {
-      toast({ title: 'Error', description: 'Failed to approve post', variant: 'destructive' });
+      toast({ title: 'Hata', description: 'Gönderi onaylanamadı', variant: 'destructive' });
     }
   };
 
   const handleReject = async (postId: number) => {
     try {
       await apiService.rejectPost(postId);
-      toast({ title: 'Post rejected and deleted' });
+      toast({ title: 'Gönderi reddedildi ve silindi' });
       setPosts(posts.filter((post) => post.id !== postId));
     } catch (err) {
-      toast({ title: 'Error', description: 'Failed to reject post', variant: 'destructive' });
+      toast({ title: 'Hata', description: 'Gönderi reddedilemedi', variant: 'destructive' });
     }
   };
 
@@ -166,10 +166,10 @@ const AdminPanel: React.FC = () => {
     if (postToDelete) {
       try {
         await apiService.deleteReportedPost(postToDelete);
-        toast({ title: 'Post deleted' });
+        toast({ title: 'Gönderi silindi' });
         setReports(reports.filter((r) => r.post?.id !== postToDelete));
       } catch (err) {
-        toast({ title: 'Error', description: 'Failed to delete post', variant: 'destructive' });
+        toast({ title: 'Hata', description: 'Gönderi silinemedi', variant: 'destructive' });
       }
       setShowDeleteDialog(false);
       setPostToDelete(null);
@@ -190,6 +190,7 @@ const AdminPanel: React.FC = () => {
           <div className="absolute inset-0 w-16 h-16 border-4 border-purple-500/20 border-t-purple-500 rounded-full animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }}></div>
           <Eye className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-6 w-6 text-[#FF832F] animate-pulse" />
         </div>
+        <span className="ml-4 text-lg text-[#FF832F]">Yükleniyor...</span>
       </div>
     );
   }
@@ -199,18 +200,18 @@ const AdminPanel: React.FC = () => {
       <div className="container mx-auto px-4 bg-card rounded-lg shadow-lg">
         <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as any)} className="w-full">
           <TabsList className="mb-6">
-            <TabsTrigger value="users">Users</TabsTrigger>
-            <TabsTrigger value="posts">Pending Posts</TabsTrigger>
-            <TabsTrigger value="reports">Reports</TabsTrigger>
+            <TabsTrigger value="users">Kullanıcılar</TabsTrigger>
+            <TabsTrigger value="posts">Onay Bekleyen Gönderiler</TabsTrigger>
+            <TabsTrigger value="reports">Raporlar</TabsTrigger>
           </TabsList>
           <TabsContent value="users">
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Username</TableHead>
-                  <TableHead>Email</TableHead>
-                  <TableHead>Role</TableHead>
-                  <TableHead>Created</TableHead>
+                  <TableHead>Kullanıcı Adı</TableHead>
+                  <TableHead>E-posta</TableHead>
+                  <TableHead>Rol</TableHead>
+                  <TableHead>Oluşturulma</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -229,26 +230,26 @@ const AdminPanel: React.FC = () => {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Title</TableHead>
-                  <TableHead>Content</TableHead>
-                  <TableHead>User</TableHead>
-                  <TableHead>Created</TableHead>
-                  <TableHead>Actions</TableHead>
+                  <TableHead>Başlık</TableHead>
+                  <TableHead>İçerik</TableHead>
+                  <TableHead>Kullanıcı</TableHead>
+                  <TableHead>Oluşturulma</TableHead>
+                  <TableHead>Eylemler</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {paginatedPosts.length === 0 ? (
-                  <TableRow><TableCell colSpan={5} className="text-center">No pending posts</TableCell></TableRow>
+                  <TableRow><TableCell colSpan={5} className="text-center">Onay bekleyen gönderi yok</TableCell></TableRow>
                 ) : (
                   paginatedPosts.map((post) => (
                     <TableRow key={post.id}>
                       <TableCell>{post.title}</TableCell>
                       <TableCell>{post.content}</TableCell>
                       <TableCell>{post.user ? post.user.username : post.userId}</TableCell>
-                      <TableCell>{post.created_at ? formatDate(post.created_at) : 'Invalid Date'}</TableCell>
+                      <TableCell>{post.created_at ? formatDate(post.created_at) : 'Geçersiz Tarih'}</TableCell>
                       <TableCell>
-                        <Button size="sm" variant="secondary" onClick={() => handleApprove(post.id)} className="mr-2">Approve</Button>
-                        <Button size="sm" variant="destructive" onClick={() => handleReject(post.id)}>Reject</Button>
+                        <Button size="sm" variant="secondary" onClick={() => handleApprove(post.id)} className="mr-2">Onayla</Button>
+                        <Button size="sm" variant="destructive" onClick={() => handleReject(post.id)}>Reddet</Button>
                       </TableCell>
                     </TableRow>
                   ))
@@ -257,15 +258,15 @@ const AdminPanel: React.FC = () => {
             </Table>
             {postsPageCount > 1 && (
               <div className="flex justify-center mt-4 gap-2">
-                <Button size="sm" disabled={postsPage === 1} onClick={() => setPostsPage(postsPage - 1)}>Prev</Button>
-                <span className="px-2">Page {postsPage} of {postsPageCount}</span>
-                <Button size="sm" disabled={postsPage === postsPageCount} onClick={() => setPostsPage(postsPage + 1)}>Next</Button>
+                <Button size="sm" disabled={postsPage === 1} onClick={() => setPostsPage(postsPage - 1)}>Önceki</Button>
+                <span className="px-2">Sayfa {postsPage} / {postsPageCount}</span>
+                <Button size="sm" disabled={postsPage === postsPageCount} onClick={() => setPostsPage(postsPage + 1)}>Sonraki</Button>
                     </div>
             )}
           </TabsContent>
           <TabsContent value="reports">
             {reportsLoading ? (
-              <div className="text-gray-400">Loading...</div>
+              <div className="text-gray-400">Yükleniyor...</div>
             ) : reportsError ? (
               <div className="text-red-400">{reportsError}</div>
             ) : (
@@ -273,27 +274,27 @@ const AdminPanel: React.FC = () => {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Post</TableHead>
-                      <TableHead>Content</TableHead>
-                      <TableHead>Reported By</TableHead>
-                      <TableHead>Reason</TableHead>
-                      <TableHead>Date</TableHead>
-                      <TableHead>Actions</TableHead>
+                      <TableHead>Gönderi</TableHead>
+                      <TableHead>İçerik</TableHead>
+                      <TableHead>Raporlu</TableHead>
+                      <TableHead>Sebep</TableHead>
+                      <TableHead>Tarih</TableHead>
+                      <TableHead>Eylemler</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {paginatedReports.length === 0 ? (
-                      <TableRow><TableCell colSpan={6} className="text-center">No reports</TableCell></TableRow>
+                      <TableRow><TableCell colSpan={6} className="text-center">Rapor yok</TableCell></TableRow>
                     ) : (
                       paginatedReports.map((report) => (
                         <TableRow key={report.id}>
-                          <TableCell>{report.post?.title || 'Deleted Post'}</TableCell>
+                          <TableCell>{report.post?.title || 'Silinmiş Gönderi'}</TableCell>
                           <TableCell>{report.post?.content}</TableCell>
-                          <TableCell>{report.user?.full_name || report.user?.username || 'Unknown'}</TableCell>
-                          <TableCell>{report.reason || 'No reason provided'}</TableCell>
-                          <TableCell>{report.created_at ? formatDate(report.created_at) : 'Invalid Date'}</TableCell>
+                          <TableCell>{report.user?.full_name || report.user?.username || 'Bilinmeyen'}</TableCell>
+                          <TableCell>{report.reason || 'Sebep belirtilmedi'}</TableCell>
+                          <TableCell>{report.created_at ? formatDate(report.created_at) : 'Geçersiz Tarih'}</TableCell>
                           <TableCell>
-                            <Button size="sm" variant="destructive" onClick={() => handleDeleteReportedPost(report.post?.id)}>Delete Post</Button>
+                            <Button size="sm" variant="destructive" onClick={() => handleDeleteReportedPost(report.post?.id)}>Gönderiyi Sil</Button>
                           </TableCell>
                         </TableRow>
                       ))
@@ -302,9 +303,9 @@ const AdminPanel: React.FC = () => {
                 </Table>
                 {reportsPageCount > 1 && (
                   <div className="flex justify-center mt-4 gap-2">
-                    <Button size="sm" disabled={reportsPage === 1} onClick={() => setReportsPage(reportsPage - 1)}>Prev</Button>
-                    <span className="px-2">Page {reportsPage} of {reportsPageCount}</span>
-                    <Button size="sm" disabled={reportsPage === reportsPageCount} onClick={() => setReportsPage(reportsPage + 1)}>Next</Button>
+                    <Button size="sm" disabled={reportsPage === 1} onClick={() => setReportsPage(reportsPage - 1)}>Önceki</Button>
+                    <span className="px-2">Sayfa {reportsPage} / {reportsPageCount}</span>
+                    <Button size="sm" disabled={reportsPage === reportsPageCount} onClick={() => setReportsPage(reportsPage + 1)}>Sonraki</Button>
                   </div>
                 )}
               </>
@@ -314,14 +315,14 @@ const AdminPanel: React.FC = () => {
         <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Delete Post?</AlertDialogTitle>
+              <AlertDialogTitle>Gönderiyi Silmek İstediğinize Emin Misiniz?</AlertDialogTitle>
               <AlertDialogDescription>
-                Are you sure you want to delete this post? This action cannot be undone.
+                Bu işlem geri alınamaz.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={confirmDelete} className="bg-red-600 hover:bg-red-700">Delete</AlertDialogAction>
+              <AlertDialogCancel>İptal</AlertDialogCancel>
+              <AlertDialogAction onClick={confirmDelete} className="bg-red-600 hover:bg-red-700">Sil</AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>

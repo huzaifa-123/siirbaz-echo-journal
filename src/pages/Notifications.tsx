@@ -41,20 +41,20 @@ const Notifications: React.FC = () => {
     console.log('Notification actor:', notification.actor);
     switch (notification.type) {
       case 'like':
-        return `${notification.actor?.full_name} liked your post`;
+        return `${notification.actor?.full_name} senin gönderinizi beğendi`;
       case 'comment':
-        return `${notification.actor?.full_name} commented on your post`;
+        return `${notification.actor?.full_name} senin gönderinize yorum yaptı`;
       case 'follow':
-        return `${notification.actor?.full_name} started following you`;
+        return `${notification.actor?.full_name} seni takip etmeye başladı`;
       default:
-        return 'New notification';
+        return 'Yeni bildirim';
     }
   };
 
   if (loading) {
     return (
       <div className="flex justify-center items-center py-12">
-        <div className="text-gray-400">Loading notifications...</div>
+        <div className="text-gray-400">Bildirimler yükleniyor...</div>
       </div>
     );
   }
@@ -62,15 +62,15 @@ const Notifications: React.FC = () => {
   return (
     <div className="max-w-2xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-white mb-2">Notifications</h1>
-        <p className="text-gray-400">Stay updated with your activity</p>
+        <h1 className="text-3xl font-bold text-white mb-2">Bildirimler</h1>
+        <p className="text-gray-400">Aktivitelerinizle ilgili güncellemeleri takip edin</p>
       </div>
 
       <div className="space-y-4">
         {notifications.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-gray-400 text-lg">No notifications yet.</p>
-            <p className="text-gray-500 mt-2">We'll notify you when something happens!</p>
+            <p className="text-gray-400 text-lg">Henüz bildirim yok.</p>
+            <p className="text-gray-500 mt-2">Bir şey olduğunda bildirim alacaksınız!</p>
           </div>
         ) : (
           notifications.map(notification => (

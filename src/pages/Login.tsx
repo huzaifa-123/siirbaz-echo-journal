@@ -24,13 +24,13 @@ const Login: React.FC = () => {
       await login(credentials);
       navigate('/');
       toast({
-        title: "Welcome back!",
-        description: "You have successfully logged in.",
+        title: "Tekrar Hoşgeldiniz!",
+        description: "Başarıyla giriş yaptınız.",
       });
     } catch (error) {
       toast({
-        title: "Login failed",
-        description: "Invalid username or password.",
+        title: "Giriş başarısız",
+        description: "Geçersiz kullanıcı adı veya şifre.",
         variant: "destructive",
       });
     } finally {
@@ -42,15 +42,15 @@ const Login: React.FC = () => {
     <div className="min-h-screen flex items-center justify-center bg-background">
       <div className="w-full max-w-md p-8 rounded-lg shadow-lg bg-card">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl text-white">Welcome Back</CardTitle>
-          <p className="text-gray-400">Sign in to your account</p>
+          <CardTitle className="text-2xl text-white">Tekrar Hoşgeldiniz</CardTitle>
+          <p className="text-gray-400">Hesabınıza giriş yapın</p>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <Input
                 type="text"
-                placeholder="Username or Email"
+                placeholder="Kullanıcı Adı veya E-posta"
                 value={credentials.username}
                 onChange={(e) => setCredentials(prev => ({ ...prev, username: e.target.value }))}
                 className="bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:ring-2 focus:ring-[#FF832F] focus:border-[#FF832F] rounded-md"
@@ -60,7 +60,7 @@ const Login: React.FC = () => {
             <div>
               <Input
                 type="password"
-                placeholder="Password"
+                placeholder="Şifre"
                 value={credentials.password}
                 onChange={(e) => setCredentials(prev => ({ ...prev, password: e.target.value }))}
                 className="bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:ring-2 focus:ring-[#FF832F] focus:border-[#FF832F] rounded-md"
@@ -72,14 +72,14 @@ const Login: React.FC = () => {
               className="w-full bg-[#FF832F] hover:bg-[#FF832F]/90 text-white font-semibold rounded-md shadow"
               disabled={loading}
             >
-              {loading ? 'Signing in...' : 'Sign In'}
+              {loading ? 'Giriş yapılıyor...' : 'Giriş Yap'}
             </Button>
           </form>
           <div className="mt-6 text-center">
             <p className="text-gray-400">
-              Don't have an account?{' '}
+              Hesabınız yok mu?{' '}
               <Link to="/register" className="text-[#FF832F] hover:underline font-semibold">
-                Sign up
+                Kayıt Ol
               </Link>
             </p>
           </div>

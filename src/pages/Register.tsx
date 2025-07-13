@@ -29,8 +29,8 @@ const Register: React.FC = () => {
     
     if (formData.password !== formData.confirmPassword) {
       toast({
-        title: "Password mismatch",
-        description: "Passwords do not match.",
+        title: "Şifreler uyuşmuyor",
+        description: "Şifreler eşleşmiyor.",
         variant: "destructive",
       });
       return;
@@ -42,13 +42,13 @@ const Register: React.FC = () => {
       await register(formData);
       navigate('/');
       toast({
-        title: "Welcome to Dizesi!",
-        description: "Your account has been created successfully.",
+        title: "Dizesi'ye Hoşgeldiniz!",
+        description: "Hesabınız başarıyla oluşturuldu.",
       });
     } catch (error) {
       toast({
-        title: "Registration failed",
-        description: "Please try again with different details.",
+        title: "Kayıt başarısız",
+        description: "Lütfen farklı bilgilerle tekrar deneyin.",
         variant: "destructive",
       });
     } finally {
@@ -90,12 +90,12 @@ const Register: React.FC = () => {
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <Label htmlFor="fullName" className="text-gray-300 text-sm">
-                  Full Name
+                  Ad Soyad
                 </Label>
                 <Input
                   id="fullName"
                   name="fullName"
-                  placeholder="Enter your full name"
+                  placeholder="Adınızı ve soyadınızı girin"
                   value={formData.fullName}
                   onChange={handleChange}
                   className="bg-gray-700 border border-gray-600 text-white placeholder-gray-400 h-9 focus:ring-2 focus:ring-[#FF832F] focus:border-[#FF832F] rounded-md"
@@ -104,12 +104,12 @@ const Register: React.FC = () => {
               </div>
               <div>
                 <Label htmlFor="username" className="text-gray-300 text-sm">
-                  Username
+                  Kullanıcı Adı
                 </Label>
                 <Input
                   id="username"
                   name="username"
-                  placeholder="Choose a username"
+                  placeholder="Bir kullanıcı adı seçin"
                   value={formData.username}
                   onChange={handleChange}
                   onBlur={handleUsernameBlur}
@@ -117,13 +117,13 @@ const Register: React.FC = () => {
                   required
                 />
                 {usernameStatus === 'checking' && (
-                  <p className="text-xs text-gray-400 mt-1">Checking availability...</p>
+                  <p className="text-xs text-gray-400 mt-1">Kullanılabilirlik kontrol ediliyor...</p>
                 )}
                 {usernameStatus === 'available' && (
-                  <p className="text-xs text-green-400 mt-1">Username is available ✓</p>
+                  <p className="text-xs text-green-400 mt-1">Kullanıcı adı kullanılabilir ✓</p>
                 )}
                 {usernameStatus === 'taken' && (
-                  <p className="text-xs text-red-400 mt-1">Username is already taken</p>
+                  <p className="text-xs text-red-400 mt-1">Kullanıcı adı zaten alınmış</p>
                 )}
               </div>
             </div>
@@ -196,13 +196,13 @@ const Register: React.FC = () => {
               </div>
               <div>
                 <Label htmlFor="confirmPassword" className="text-gray-300 text-sm">
-                  Confirm Password
+                  Şifreyi Onayla
                 </Label>
                 <Input
                   id="confirmPassword"
                   name="confirmPassword"
                   type="password"
-                  placeholder="Confirm password"
+                  placeholder="Şifreyi onaylayın"
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   className="bg-gray-700 border border-gray-600 text-white placeholder-gray-400 h-9 focus:ring-2 focus:ring-[#FF832F] focus:border-[#FF832F] rounded-md"
@@ -216,14 +216,14 @@ const Register: React.FC = () => {
               className="w-full mt-4 bg-[#FF832F] hover:bg-[#FF832F]/90 text-white font-semibold rounded-md shadow"
               disabled={loading || usernameStatus === 'taken' || usernameStatus === 'checking'}
             >
-              {loading ? 'Creating Account...' : 'Create Account'}
+              {loading ? 'Hesap Oluşturuluyor...' : 'Hesap Oluştur'}
             </Button>
           </form>
           <div className="mt-4 text-center">
             <p className="text-gray-400 text-sm">
-              Already have an account?{' '}
+              Zaten hesabınız var mı?{' '}
               <Link to="/login" className="text-[#FF832F] hover:underline font-semibold">
-                Sign in
+                Giriş yap
               </Link>
             </p>
           </div>

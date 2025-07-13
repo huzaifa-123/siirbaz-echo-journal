@@ -62,10 +62,10 @@ const PostCard: React.FC<PostCardProps> = ({ post, onLike, showFollowButton = tr
   };
 
   // Defensive user fallback
-  const user = post.user || { fullName: 'Unknown User', username: 'unknown', profilePicture: '', isFollowing: false };
+  const user = post.user || { fullName: 'Bilinmeyen Kullanıcı', username: 'bilinmeyen', profilePicture: '', isFollowing: false };
   const initials = user.fullName
     ? user.fullName.split(' ').map(n => n[0]).join('')
-    : 'U';
+    : 'B';
 
   // Remove: onFollow, showFollowButton props, isFollowLoading, showUnfollowDialog, handleFollow, handleUnfollow, and all follow button JSX.
   // Remove all references to post.user.isFollowing and follow button rendering.
@@ -76,13 +76,13 @@ const PostCard: React.FC<PostCardProps> = ({ post, onLike, showFollowButton = tr
       const url = `${window.location.origin}/post/${post.id}`;
       await navigator.clipboard.writeText(url);
       toast({
-        title: 'Link copied!',
-        description: 'Post URL copied to clipboard.',
+        title: 'Link kopyalandı!',
+        description: 'Gönderi URL\'si panoya kopyalandı.',
       });
     } catch {
       toast({
-        title: 'Error',
-        description: 'Failed to copy link.',
+        title: 'Hata',
+        description: 'Link kopyalanamadı.',
         variant: 'destructive',
       });
     }
@@ -96,18 +96,18 @@ const PostCard: React.FC<PostCardProps> = ({ post, onLike, showFollowButton = tr
       const data = await apiService.getComments(post.id);
       setComments(data.comments || []);
     } catch (err) {
-      setCommentsError('Failed to load comments.');
+      setCommentsError('Yorumlar yüklenemedi.');
     }
     setCommentsLoading(false);
   };
 
   const handlePostComment = async () => {
     if (!currentUser) {
-      toast({ title: 'Login required', description: 'Please log in to comment.', variant: 'destructive' });
+      toast({ title: 'Giriş gerekli', description: 'Lütfen giriş yapınız.', variant: 'destructive' });
       return;
     }
     if (!commentText.trim()) {
-      toast({ title: 'Empty comment', description: 'Type something to comment.', variant: 'destructive' });
+      toast({ title: 'Boş yorum', description: 'Yorum yazınız.', variant: 'destructive' });
       return;
     }
     setIsCommenting(true);
@@ -120,8 +120,8 @@ const PostCard: React.FC<PostCardProps> = ({ post, onLike, showFollowButton = tr
       const data = await apiService.getComments(post.id);
       setComments(data.comments || []);
     } catch (err) {
-      setPostError('Failed to post comment.');
-      toast({ title: 'Error', description: 'Failed to post comment.', variant: 'destructive' });
+      setPostError('Yorum gönderilemedi.');
+      toast({ title: 'Hata', description: 'Yorum gönderilemedi.', variant: 'destructive' });
     }
     setIsCommenting(false);
   };
@@ -137,9 +137,9 @@ const PostCard: React.FC<PostCardProps> = ({ post, onLike, showFollowButton = tr
       setHasReported(true);
       setShowReportDialog(false);
       setReportReason('');
-      toast({ title: 'Reported', description: 'The post has been reported to the admin.' });
+      toast({ title: 'Raporlandı', description: 'Gönderi yönetici tarafından raporlandı.' });
     } catch (err) {
-      toast({ title: 'Error', description: 'Failed to report post or already reported.', variant: 'destructive' });
+      toast({ title: 'Hata', description: 'Gönderi raporlanamadı veya zaten raporlandı.', variant: 'destructive' });
     }
     setIsReporting(false);
   };
@@ -147,8 +147,8 @@ const PostCard: React.FC<PostCardProps> = ({ post, onLike, showFollowButton = tr
   const handleFollowToggle = async () => {
     if (!currentUser) {
     toast({
-        title: 'Login required',
-        description: 'Please log in to follow users.',
+        title: 'Giriş gerekli',
+        description: 'Lütfen giriş yapınız.',
         variant: 'destructive',
       });
       return;
@@ -160,7 +160,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, onLike, showFollowButton = tr
         setIsFollowing(result.following);
       }
     } catch (error) {
-      toast({ title: 'Error', description: 'Failed to update follow status.', variant: 'destructive' });
+      toast({ title: 'Hata', description: 'Takip durumu güncellenemedi.', variant: 'destructive' });
     }
     setIsFollowLoading(false);
   };
@@ -360,20 +360,20 @@ const PostCard: React.FC<PostCardProps> = ({ post, onLike, showFollowButton = tr
               >
                 <X className="h-6 w-6" />
               </button>
-              <h2 className="text-lg font-bold text-neutral-100 mb-4">Report Post</h2>
-              <p className="text-neutral-300 mb-4">Are you sure you want to report this post? Optionally, provide a reason below.</p>
+              <h2 className="text-lg font-bold text-neutral-100 mb-4">Gönderiyi Raporla</h2>
+              <p className="text-neutral-300 mb-4">Bu gönderiyi raporlamak istediğinizden emin misiniz? İsterseniz aşağıya bir sebep yazabilirsiniz.</p>
               <textarea
                 className="w-full rounded-lg bg-neutral-800 text-white px-4 py-2 border border-neutral-700 focus:outline-none focus:ring-2 focus:ring-violet-500 mb-4"
-                placeholder="Reason (optional)"
+                placeholder="Sebep (isteğe bağlı)"
                 value={reportReason}
                 onChange={e => setReportReason(e.target.value)}
                 rows={3}
                 disabled={isReporting}
               />
               <div className="flex justify-end space-x-3 mt-4">
-                <Button variant="ghost" onClick={() => setShowReportDialog(false)} disabled={isReporting}>Cancel</Button>
+                <Button variant="ghost" onClick={() => setShowReportDialog(false)} disabled={isReporting}>İptal</Button>
                 <Button variant="destructive" onClick={handleConfirmReport} disabled={isReporting}>
-                  {isReporting ? 'Reporting...' : 'Report'}
+                  {isReporting ? 'Raporlanıyor...' : 'Raporla'}
                 </Button>
               </div>
             </div>

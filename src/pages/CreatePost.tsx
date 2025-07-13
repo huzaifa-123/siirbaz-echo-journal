@@ -33,14 +33,14 @@ const CreatePost: React.FC = () => {
 
       await apiService.createPost(formData);
       toast({
-        title: "Post created!",
-        description: "Your post has been published successfully.",
+        title: "Gönderi oluşturuldu!",
+        description: "Gönderiniz başarıyla yayınlandı.",
       });
       navigate('/');
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to create post. Please try again.",
+        title: "Hata",
+        description: "Gönderi oluşturulamadı. Lütfen tekrar deneyin.",
         variant: "destructive",
       });
     } finally {
@@ -60,8 +60,8 @@ const CreatePost: React.FC = () => {
     if (file) {
       if (file.size > 5 * 1024 * 1024) { // 5MB limit
         toast({
-          title: "File too large",
-          description: "Please select an image smaller than 5MB.",
+          title: "Dosya çok büyük",
+          description: "Lütfen 5MB'den küçük bir resim seçin.",
           variant: "destructive",
         });
         return;
@@ -86,19 +86,19 @@ const CreatePost: React.FC = () => {
       <div className="w-full max-w-2xl p-8 rounded-lg shadow-lg bg-card">
         <CardHeader>
           <CardTitle className="text-2xl bg-gradient-to-r from-[#FF832F] to-[#FF832F] bg-clip-text text-transparent">
-            Create New Post
+            Yeni Gönderi Oluştur
           </CardTitle>
-          <p className="text-gray-400">Share your thoughts with the community</p>
+          <p className="text-gray-400">Düşüncelerinizi toplulukla paylaşın</p>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-2">
-                Title
+                Başlık
               </label>
               <Input
                 name="title"
-                placeholder="Enter your post title..."
+                placeholder="Gönderi başlığınızı girin..."
                 value={postData.title}
                 onChange={handleChange}
                 className="glass border-white/20 text-white placeholder-gray-400 focus:border-[#FF832F]/50"
@@ -108,11 +108,11 @@ const CreatePost: React.FC = () => {
             
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-2">
-                Content
+                İçerik
               </label>
               <Textarea
                 name="content"
-                placeholder="Write your post content here..."
+                placeholder="Gönderi içeriğinizi buraya yazın..."
                 value={postData.content}
                 onChange={handleChange}
                 rows={8}
@@ -123,7 +123,7 @@ const CreatePost: React.FC = () => {
 
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-2">
-                Image (Optional)
+                Resim (Opsiyonel)
               </label>
               {!imagePreview ? (
                 <div className="relative">
@@ -139,7 +139,7 @@ const CreatePost: React.FC = () => {
                     className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-white/20 rounded-lg cursor-pointer glass hover:border-[#FF832F]/50 transition-all duration-300"
                   >
                     <Upload className="h-8 w-8 text-gray-400 mb-2" />
-                    <p className="text-gray-400 text-sm">Click to upload an image</p>
+                    <p className="text-gray-400 text-sm">Resim yükleyin</p>
                     <p className="text-gray-500 text-xs">PNG, JPG up to 5MB</p>
                   </label>
                 </div>
@@ -170,14 +170,14 @@ const CreatePost: React.FC = () => {
                 onClick={() => navigate('/')}
                 className="glass border-white/20 hover:border-red-400/50 hover:bg-red-500/10"
               >
-                Cancel
+                İptal
               </Button>
               <Button
                 type="submit"
                 disabled={loading}
                 className="btn-futuristic"
               >
-                {loading ? 'Publishing...' : 'Publish Post'}
+                {loading ? 'Yayınlıyor...' : 'Gönderi Yayınla'}
               </Button>
             </div>
           </form>

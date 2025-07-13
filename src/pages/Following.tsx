@@ -18,8 +18,8 @@ const Following: React.FC = () => {
       setPosts(data.posts || []);
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to load posts from people you follow.",
+        title: "Hata",
+        description: "Takip ettiğiniz kişilerin gönderileri yüklenemedi.",
         variant: "destructive",
       });
     } finally {
@@ -37,8 +37,8 @@ const Following: React.FC = () => {
       ));
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to like post.",
+        title: "Hata",
+        description: "Gönderi beğenilemedi.",
         variant: "destructive",
       });
     }
@@ -60,8 +60,8 @@ const Following: React.FC = () => {
       ));
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to follow/unfollow user.",
+        title: "Hata",
+        description: "Kullanıcı takip edilemedi/kaldırılamadı.",
         variant: "destructive",
       });
     }
@@ -70,7 +70,7 @@ const Following: React.FC = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center py-12">
-        <div className="text-gray-400">Loading posts from people you follow...</div>
+        <div className="text-gray-400">Takip ettiğiniz kişilerin gönderileri yükleniyor...</div>
       </div>
     );
   }
@@ -78,15 +78,15 @@ const Following: React.FC = () => {
   return (
     <div className="max-w-2xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-white mb-2">Following</h1>
-        <p className="text-gray-400">Posts from people you follow</p>
+        <h1 className="text-3xl font-bold text-white mb-2">Takip Edilenler</h1>
+        <p className="text-gray-400">Takip ettiğiniz kişilerin gönderileri</p>
       </div>
 
       <div className="space-y-6">
         {posts.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-gray-400 text-lg">No posts from people you follow yet.</p>
-            <p className="text-gray-500 mt-2">Start following users to see their posts here!</p>
+            <p className="text-gray-400 text-lg">Takip ettiğiniz kişilerin henüz gönderi yok.</p>
+            <p className="text-gray-500 mt-2">Takip etmeye başlayarak burada gönderilerinizi görüntüleyin!</p>
           </div>
         ) : (
           posts.map(post => (
