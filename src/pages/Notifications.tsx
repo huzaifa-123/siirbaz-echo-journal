@@ -41,9 +41,9 @@ const Notifications: React.FC = () => {
     console.log('Notification actor:', notification.actor);
     switch (notification.type) {
       case 'like':
-        return `${notification.actor?.full_name} senin gönderinizi beğendi`;
+        return `${notification.actor?.full_name} senin gönderini beğendi`;
       case 'comment':
-        return `${notification.actor?.full_name} senin gönderinize yorum yaptı`;
+        return `${notification.actor?.full_name} senin gönderine yorum yaptı`;
       case 'follow':
         return `${notification.actor?.full_name} seni takip etmeye başladı`;
       default:

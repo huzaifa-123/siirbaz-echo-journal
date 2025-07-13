@@ -82,8 +82,8 @@ const Register: React.FC = () => {
     <div className="min-h-screen flex items-center justify-center bg-background">
       <div className="w-full max-w-md p-8 rounded-lg shadow-lg bg-card">
         <CardHeader className="text-center pb-4">
-          <CardTitle className="text-2xl text-white">Join Dizesi</CardTitle>
-          <p className="text-gray-400">Create your account</p>
+          <CardTitle className="text-2xl text-white">Dizesi'ye Katıl</CardTitle>
+          <p className="text-gray-400">Hesabınızı oluşturun</p>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-3">
@@ -130,13 +130,13 @@ const Register: React.FC = () => {
             
             <div>
               <Label htmlFor="email" className="text-gray-300 text-sm">
-                Email Address
+                E-posta Adresi
               </Label>
               <Input
                 id="email"
                 name="email"
                 type="email"
-                placeholder="Enter your email"
+                placeholder="E-posta adresinizi girin"
                 value={formData.email}
                 onChange={handleChange}
                 className="bg-gray-700 border border-gray-600 text-white placeholder-gray-400 h-9 focus:ring-2 focus:ring-[#FF832F] focus:border-[#FF832F] rounded-md"
@@ -147,7 +147,7 @@ const Register: React.FC = () => {
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <Label htmlFor="gender" className="text-gray-300 text-sm">
-                  Gender
+                  Cinsiyet
                 </Label>
                 <select
                   id="gender"
@@ -157,14 +157,14 @@ const Register: React.FC = () => {
                   className="w-full h-9 px-3 rounded-md bg-gray-700 border border-gray-600 text-white text-sm focus:ring-2 focus:ring-[#FF832F] focus:border-[#FF832F]"
                   required
                 >
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Other</option>
+                  <option value="male">Erkek</option>
+                  <option value="female">Kadın</option>
+                  <option value="other">Diğer</option>
                 </select>
               </div>
               <div>
                 <Label htmlFor="dateOfBirth" className="text-gray-300 text-sm">
-                  Date of Birth
+                  Doğum Tarihi
                 </Label>
                 <Input
                   id="dateOfBirth"
@@ -181,13 +181,13 @@ const Register: React.FC = () => {
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <Label htmlFor="password" className="text-gray-300 text-sm">
-                  Password
+                  Şifre
                 </Label>
                 <Input
                   id="password"
                   name="password"
                   type="password"
-                  placeholder="Create password"
+                  placeholder="Şifre oluşturun"
                   value={formData.password}
                   onChange={handleChange}
                   className="bg-gray-700 border border-gray-600 text-white placeholder-gray-400 h-9 focus:ring-2 focus:ring-[#FF832F] focus:border-[#FF832F] rounded-md"
