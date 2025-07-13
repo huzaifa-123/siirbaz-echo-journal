@@ -38,7 +38,7 @@ const Home: React.FC = () => {
     } catch (error) {
       toast({
         title: "Hata",
-        description: "Makaleler yüklenemedi.",
+        description: "Henüz Bir Gönderi  Yokler yüklenemedi.",
         variant: "destructive",
       });
     } finally {
@@ -61,7 +61,7 @@ const Home: React.FC = () => {
     } catch (error) {
       toast({
         title: "Hata",
-        description: "Makale beğenilemedi.",
+        description: "Henüz Bir Gönderi  Yok beğenilemedi.",
         variant: "destructive",
       });
     }
@@ -102,7 +102,7 @@ const Home: React.FC = () => {
       <div className="space-y-8">
         {posts.length === 0 ? (
           <div className="text-center py-20">
-            <h3 className="text-2xl font-bold text-white mb-4">Henüz Makale Yok</h3>
+            <h3 className="text-2xl font-bold text-white mb-4">Henüz Henüz Bir Gönderi  Yok Yok</h3>
             <p className="text-gray-400 text-lg">Siz ilk olarak harika bir paylaşım yapın!</p>
           </div>
         ) : (

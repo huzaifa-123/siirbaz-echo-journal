@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, Bell, User, LogOut, Home, PlusCircle, Users, Settings, BookOpen, Feather, Edit3 } from 'lucide-react';
+import { Search, Bell, User, LogOut, Home, PlusCircle, Users, Settings, BookOpen, Feather, Edit3, Menu } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerClose } from '@/components/ui/drawer';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -69,16 +70,15 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 <h1 className="text-3xl font-bold text-neutral-100 group-hover:text-neutral-300 transition-colors duration-500 tracking-tight">
                   Dizesi
                 </h1>
-                <p className="text-sm text-neutral-400 font-medium tracking-wider">Literary Excellence</p>
               </div>
             </Link>
 
-            {/* Refined Search */}
-            <div className="flex-1 max-w-xl mx-12">
+            {/* Refined Search - hidden on mobile */}
+            <div className="flex-1 max-w-xl mx-12 hidden md:block">
               <div className="relative group flex items-center">
                 <Search className="absolute left-5 top-1/2 transform -translate-y-1/2 text-neutral-400 h-5 w-5 group-focus-within:text-neutral-300 transition-colors duration-300" />
                 <Input
-                  placeholder="Search articles, authors, topics..."
+                  placeholder="yazı, yazar, konu başlığı ara..."
                   className="pl-14 pr-6 py-3 bg-neutral-800/60 border-neutral-700/50 focus:border-neutral-500/60 focus:ring-2 focus:ring-neutral-500/20 text-neutral-100 placeholder-neutral-400 rounded-2xl transition-all duration-300 text-base"
                   value={searchQuery}
                   onChange={e => setSearchQuery(e.target.value)}
@@ -89,8 +89,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               </div>
             </div>
 
-            {/* Refined Navigation */}
-            <div className="flex items-center space-x-3">
+            {/* Desktop Navigation - hidden on mobile */}
+            <div className="hidden md:flex items-center space-x-3">
               {user ? (
                 <>
                   <NavButton to="/" icon={Home} tooltip="Ana Sayfa" />
@@ -124,6 +124,71 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                   </Link>
                 </div>
               )}
+            </div>
+
+            {/* Hamburger Menu for Mobile */}
+            <div className="md:hidden flex items-center">
+              <Drawer>
+                <DrawerTrigger asChild>
+                  <Button variant="ghost" size="icon" className="rounded-full">
+                    <Menu className="h-7 w-7" />
+                  </Button>
+                </DrawerTrigger>
+                <DrawerContent>
+                  <DrawerHeader>
+                    <div className="flex items-center space-x-3 mb-4">
+                      <img src="/dizesi.jpg" alt="Dizesi Logo" className="h-10 w-10 rounded-2xl border border-neutral-700/40 bg-neutral-800/60 object-cover" />
+                      <span className="text-xl font-bold">Dizesi</span>
+                    </div>
+                  </DrawerHeader>
+                  <nav className="flex flex-col gap-2 px-4 pb-4">
+                    {user ? (
+                      <>
+                        <Link to="/" className="py-2" onClick={() => document.activeElement && (document.activeElement as HTMLElement).blur()}>
+                          Ana Sayfa
+                        </Link>
+                        <Link to="/create" className="py-2" onClick={() => document.activeElement && (document.activeElement as HTMLElement).blur()}>
+                          Yazı Yaz
+                        </Link>
+                        <Link to="/following" className="py-2" onClick={() => document.activeElement && (document.activeElement as HTMLElement).blur()}>
+                          Takip Edilenler
+                        </Link>
+                        <Link to="/notifications" className="py-2" onClick={() => document.activeElement && (document.activeElement as HTMLElement).blur()}>
+                          Bildirimler
+                          {unreadCount > 0 && (
+                            <span className="ml-2 inline-block bg-[#FF832F] text-xs rounded-full px-2 py-0.5 text-white font-bold">
+                              {unreadCount}
+                            </span>
+                          )}
+                        </Link>
+                        <Link to={`/profile/${user.username}`} className="py-2" onClick={() => document.activeElement && (document.activeElement as HTMLElement).blur()}>
+                          Profil
+                        </Link>
+                        {user.role === 'admin' && (
+                          <Link to="/admin" className="py-2" onClick={() => document.activeElement && (document.activeElement as HTMLElement).blur()}>
+                            Yönetici Paneli
+                          </Link>
+                        )}
+                        <Button variant="ghost" size="sm" className="mt-4" onClick={handleLogout}>
+                          Çıkış Yap
+                        </Button>
+                      </>
+                    ) : (
+                      <>
+                        <Link to="/login" className="py-2" onClick={() => document.activeElement && (document.activeElement as HTMLElement).blur()}>
+                          Giriş Yap
+                        </Link>
+                        <Link to="/register" className="py-2" onClick={() => document.activeElement && (document.activeElement as HTMLElement).blur()}>
+                          Topluluğa Katıl
+                        </Link>
+                      </>
+                    )}
+                  </nav>
+                  <DrawerClose asChild>
+                    <Button variant="outline" size="sm" className="w-full mt-2">Kapat</Button>
+                  </DrawerClose>
+                </DrawerContent>
+              </Drawer>
             </div>
           </div>
         </div>
@@ -220,9 +285,11 @@ const NavButton: React.FC<NavButtonProps> = ({ to, icon: Icon, tooltip, badge })
       </span>
     )}
     {/* Elegant Tooltip */}
-    <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 px-3 py-2 text-xs bg-neutral-800 border border-neutral-700 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap shadow-xl">
+    <div
+      className="absolute top-full left-1/2 transform -translate-x-1/2 mt-3 px-3 py-2 text-xs bg-neutral-800 border border-neutral-700 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none shadow-xl z-50 text-center"
+      style={{ whiteSpace: 'normal' }}
+    >
       {tooltip}
-      <div className="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-neutral-800"></div>
     </div>
   </Link>
 );

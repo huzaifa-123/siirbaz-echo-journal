@@ -187,7 +187,7 @@ const Profile: React.FC = () => {
             className="object-cover w-full h-full"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-gray-500 text-lg">No cover photo</div>
+          <div className="w-full h-full flex items-center justify-center text-gray-500 text-lg">kapak fotoğrafı yok</div>
         )}
         {isOwnProfile && (
           <div className="absolute top-3 right-3 flex space-x-2">
@@ -292,7 +292,7 @@ const Profile: React.FC = () => {
                   )}
                   {isOwnProfile && (
                     <Button variant="outline" className="mt-4 flex items-center space-x-2" onClick={() => setEditMode(true)}>
-                      <Pencil className="h-4 w-4 mr-1" />Edit Profile
+                      <Pencil className="h-4 w-4 mr-1" />profili düzenle
                     </Button>
                   )}
                 </>

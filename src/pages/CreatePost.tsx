@@ -34,7 +34,7 @@ const CreatePost: React.FC = () => {
       await apiService.createPost(formData);
       toast({
         title: "Gönderi oluşturuldu!",
-        description: "Gönderiniz başarıyla yayınlandı.",
+        description: "Gönderiniz editör onayına gönderildi.",
       });
       navigate('/');
     } catch (error) {

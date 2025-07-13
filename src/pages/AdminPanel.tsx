@@ -176,6 +176,12 @@ const AdminPanel: React.FC = () => {
     }
   };
 
+  // Add this handler to ignore a report
+  const handleIgnoreReport = (reportId: number) => {
+    setReports(reports.filter((r) => r.id !== reportId));
+    toast({ title: 'Rapor yoksayıldı' });
+  };
+
   // Pagination helpers
   const paginatedPosts = posts.slice((postsPage - 1) * ITEMS_PER_PAGE, postsPage * ITEMS_PER_PAGE);
   const paginatedReports = reports.slice((reportsPage - 1) * ITEMS_PER_PAGE, reportsPage * ITEMS_PER_PAGE);
@@ -295,6 +301,7 @@ const AdminPanel: React.FC = () => {
                           <TableCell>{report.created_at ? formatDate(report.created_at) : 'Geçersiz Tarih'}</TableCell>
                           <TableCell>
                             <Button size="sm" variant="destructive" onClick={() => handleDeleteReportedPost(report.post?.id)}>Gönderiyi Sil</Button>
+                            <Button size="sm" variant="secondary" className="ml-2" onClick={() => handleIgnoreReport(report.id)}>Yoksay</Button>
                           </TableCell>
                         </TableRow>
                       ))
