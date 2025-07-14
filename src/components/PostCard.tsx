@@ -51,6 +51,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, onLike, showFollowButton = tr
   const [isReporting, setIsReporting] = useState(false);
   const [hasReported, setHasReported] = useState(false);
   const [profileData, setProfileData] = useState<any>(null);
+  const [showFullContent, setShowFullContent] = useState(false);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -63,6 +64,11 @@ const PostCard: React.FC<PostCardProps> = ({ post, onLike, showFollowButton = tr
     };
     fetchProfile();
   }, [post.user.username]);
+
+  // Sync isFollowing state with prop in case it changes (e.g., after refresh or navigation)
+  useEffect(() => {
+    setIsFollowing(post.user?.isFollowing ?? false);
+  }, [post.user?.isFollowing]);
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -279,11 +285,15 @@ const PostCard: React.FC<PostCardProps> = ({ post, onLike, showFollowButton = tr
         
         <div className="prose prose-invert max-w-none mb-8">
           <p className="text-neutral-300 leading-relaxed text-lg font-light">
-            {post.content.substring(0, 300)}
-            {post.content.length > 300 && (
-              <span className="text-neutral-400 cursor-pointer hover:text-neutral-200 transition-colors font-medium ml-2">
-                Read more...
-              </span>
+            {showFullContent ? post.content : post.content.substring(0, 300)}
+            {post.content.length > 300 && !showFullContent && (
+              <button
+                className="text-neutral-400 cursor-pointer hover:text-neutral-200 transition-colors font-medium ml-2 underline"
+                onClick={() => setShowFullContent(true)}
+                type="button"
+              >
+                Devamını oku...
+              </button>
             )}
           </p>
         </div>
